@@ -1,3 +1,11 @@
+/******************************************************************************
+* Name: Michael Cieplak
+* PID: A11445234
+* Class: CSE112
+* Description: This is a rest API which maintains a websites blog. This API is
+* able to create, read, update, and delete blog posts and comments.
+******************************************************************************/
+// requirements used by this app
 var express = require('express');
 var path = require('path');
 var connect = require('connect');
@@ -15,18 +23,23 @@ var db = mongoose.connection;
 console.log(mongoose.connection.readyState);
 var collection = db.collection('cieplak_blog');
 
-var Schema = mongoose.Schema;
-var stuff = new Schema ({
-  title: String,
-  post : String
-});
-
+// use the body parser to be able to filter JSON objects
 app.use(connect.bodyParser());
 
+/******************************************************************************
+* /postBlogPost: Will insert a new blog post into the database.
+* Input: The blog post along with additional information such as user and
+*        title.
+* Output: Will return the object just inserted into the database.
+******************************************************************************/
 app.post('/postBlogPost', function(req, res) {
-  var query = {title: req.body.title, post: req.body.blogPost};
+  // create the query for the database
+  var query = {title: req.body.title, user : req.body.user,
+               post: req.body.blogPost, comments: ""};
   
+  // execute the query
   collection.insert(query, {w:1}, function(err, records) {
+    // check if any errors occurred
     if(err) {
       console.log("Could not enter information into the database.");
     }
