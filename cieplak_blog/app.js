@@ -10,6 +10,7 @@ var express = require('express');
 var path = require('path');
 var connect = require('connect');
 var mongoose = require('mongoose');
+var mongo = require('mongodb');
 var app = express();
 
 // connect to local database
@@ -45,17 +46,44 @@ app.post('/postBlogPost', function(req, res) {
     }
     else {
       console.log("Inserted the following into the database:\n");
-      console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
       res.json(query);
     }
   });
 });
 
-app.get('/getBlog', function(req, res) {
+/******************************************************************************
+* /getBlog: Will find and return all blog posts inside of the database.
+* Input: None. 
+* Output: Will return the blogs in the database.
+******************************************************************************/
+app.get('/getAllBlogs', function(req, res) {
   collection.find().toArray(function(err, records) {
     console.log(records);
     res.send(records);
   });
 });
 
+app.put('/getBlog', function(req, res) {
+  var BSON = mongo.BSONPure;
+  var o_id = new BSON.ObjectID(req.body.id);
+  var query = {_id : o_id}
+
+ // execute the query
+  collection.find(query).toArray(function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not find the information into the database.");
+    }
+    else {
+     // console.log("Inserted the following into the database:\n");
+      //console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      console.log(records);
+      res.json(records);
+    }
+  });
+
+});
+
+// not sure what this does but it breaks the app if i remove it
 module.exports = app;
