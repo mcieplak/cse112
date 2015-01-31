@@ -44,7 +44,7 @@ Command:
 curl -X PUT http://localhost:3000/deleteBlog --data "id="
 
 Example:
-viki@cieplak:~$ curl -X PUT http://localhost:3000/deleteBlog --data "id=54cc52fd531472970c08d727"
+viki@cieplak:~$ curl -X DELETE http://localhost:3000/deleteBlog --data "id=54cc52fd531472970c08d727"
 1viki@cieplak:~$ 
 
 
@@ -77,10 +77,10 @@ viki@cieplak:~$ curl -X PUT http://localhost:3000/readComments --data "id=54cc52
 [{"_id":"54cc562aa579fdd30cb5534e","id":"54cc52a6531472970c08d726","comment":"Great name!"},{"_id":"54cc564da579fdd30cb5534f","id":"54cc52a6531472970c08d726","comment":"Yes!"}]viki@cieplak:~$ 
 
 
-Removing comment from the database:
+Deleting a comment from the database:
 
 Command:
-curl -X PUT http://localhost:3000/deleteComment --data "id="
+curl -X DELETE http://localhost:3000/deleteComment --data "id="
 
 Example:
 viki@cieplak:~$ curl -X PUT http://localhost:3000/deleteComment --data "id=54cc564da579fdd30cb5534f"

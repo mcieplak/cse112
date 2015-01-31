@@ -94,7 +94,7 @@ app.put('/getBlog', function(req, res) {
 * Input: The ID associated with the blog post. 
 * Output: None.
 ******************************************************************************/
-app.put('/deleteBlog', function(req, res) {
+app.delete('/deleteBlog', function(req, res) {
   var BSON = mongo.BSONPure;
   var o_id = new BSON.ObjectID(req.body.id);
   var query = {_id : o_id};
@@ -193,7 +193,7 @@ app.put('/readComments', function(req, res) {
 * Input: The ID associated with the comment. 
 * Output: None.
 ******************************************************************************/
-app.put('/deleteComment', function(req, res) {
+app.delete('/deleteComment', function(req, res) {
   var BSON = mongo.BSONPure;
   var o_id = new BSON.ObjectID(req.body.id);
   var query = {_id : o_id};
