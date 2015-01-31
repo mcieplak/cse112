@@ -36,7 +36,7 @@ app.use(connect.bodyParser());
 app.post('/postBlogPost', function(req, res) {
   // create the query for the database
   var query = {title: req.body.title, user : req.body.user,
-               post: req.body.blogPost, comments: ""};
+               post: req.body.blogPost};
   
   // execute the query
   collection.insert(query, {w:1}, function(err, records) {
@@ -53,7 +53,7 @@ app.post('/postBlogPost', function(req, res) {
 });
 
 /******************************************************************************
-* /getBlog: Will find and return all blog posts inside of the database.
+* /getAllBlog: Will find and return all blog posts inside of the database.
 * Input: None. 
 * Output: Will return the blogs in the database.
 ******************************************************************************/
@@ -64,10 +64,15 @@ app.get('/getAllBlogs', function(req, res) {
   });
 });
 
+/******************************************************************************
+* /getBlog: Will find and return a specific blog post.
+* Input: The ID associated with the blog post. 
+* Output: Will return the blog in the database.
+******************************************************************************/
 app.put('/getBlog', function(req, res) {
   var BSON = mongo.BSONPure;
   var o_id = new BSON.ObjectID(req.body.id);
-  var query = {_id : o_id}
+  var query = {_id : o_id};
 
  // execute the query
   collection.find(query).toArray(function(err, records) {
@@ -82,8 +87,108 @@ app.put('/getBlog', function(req, res) {
       res.json(records);
     }
   });
+});
+
+
+/******************************************************************************
+* /deleteBlog: Delete a blog post.
+* Input: The ID associated with the blog post. 
+* Output: None.
+******************************************************************************/
+app.put('/deleteBlog', function(req, res) {
+  var BSON = mongo.BSONPure;
+  var o_id = new BSON.ObjectID(req.body.id);
+  var query = {_id : o_id};
+
+ // execute the query
+  collection.remove(query, function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not find the information into the database.");
+    }
+    else {
+     // console.log("Inserted the following into the database:\n");
+      //console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      console.log(records);
+      res.json(records);
+    }
+  });
+});
+
+/******************************************************************************
+* /postComment: Will insert a new comment under a blog post into the database.
+* Input: The blog post ID along with the comment.
+* Output: Will return the object just inserted into the database.
+******************************************************************************/
+app.post('/postComment', function(req, res) {
+  // create the query for the database
+  var query = {id: req.body.id, user : req.body.comment};
+  
+  // execute the query
+  collection.insert(query, {w:1}, function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not enter information into the database.");
+    }
+    else {
+      console.log("Inserted the following into the database:\n");
+     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      res.json(query);
+    }
+  });
+});
+
+
+/******************************************************************************
+* /readComments: Will read comments under a blog post in the database.
+* Input: The blog post ID.
+* Output: Will return the comments for the blog post.
+******************************************************************************/
+app.put('/readComments', function(req, res) {
+  // create the query for the database
+  var query = {id: req.body.id};
+
+  console.log(req.body.id);
+  // execute the query
+  collection.find(query).toArray(function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not find the information into the database.");
+    }
+    else {
+      console.log(records);
+      res.json(records);
+    }
+  });
+  
+});
+
+/******************************************************************************
+* /deleteComment: Delete a comment associated with a  post.
+* Input: The ID associated with the comment. 
+* Output: None.
+******************************************************************************/
+app.put('/deleteComment', function(req, res) {
+  var BSON = mongo.BSONPure;
+  var o_id = new BSON.ObjectID(req.body.id);
+  var query = {_id : o_id};
+
+ // execute the query
+  collection.remove(query, function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not find the information into the database.");
+    }
+    else {
+     // console.log("Inserted the following into the database:\n");
+      //console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      console.log(records);
+      res.json(records);
+    }
+  });
 
 });
+
 
 // not sure what this does but it breaks the app if i remove it
 module.exports = app;
