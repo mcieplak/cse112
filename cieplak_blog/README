@@ -1,1 +1,44 @@
-Hi
+Name: Michael Cieplak
+PID: A11445234
+Class: CSE112
+Description: This is a rest API which maintains a websites blog. This API is
+able to create, read, update, and delete blog posts and comments.
+
+
+Example of curl commands:
+
+Inserting blog post into the database:
+
+viki@cieplak:~$ curl -X POST http://localhost:3000/postBlog --data "title=My blog post&user=Michael Cieplak&blogPost=Hello everyone"
+{"title":"My blog post","user":"Michael Cieplak","post":"Hello everyone","_id":"54cc52a6531472970c08d726"}viki@cieplak:~$ 
+
+Getting all blog posts from the database:
+viki@cieplak:~$ curl -X GET http://localhost:3000/getAllBlogs
+[{"_id":"54cc52a6531472970c08d726","title":"My blog post","user":"Michael Cieplak","post":"Hello everyone"},{"_id":"54cc52fd531472970c08d727","title":"My second blog post","user":"user2","post":"post2"},{"_id":"54cc5322531472970c08d728","title":"My third blog post","user":"user3","post":"post3"}]viki@cieplak:~$ 
+
+Getting a specific blog from the database:
+viki@cieplak:~$ curl -X PUT http://localhost:3000/getBlog --data "id=54cc52fd531472970c08d727"
+[{"_id":"54cc52fd531472970c08d727","title":"My second blog post","user":"user2","post":"post2"}]viki@cieplak:~$ 
+
+Deleting a specific blog from the database:
+viki@cieplak:~$ curl -X PUT http://localhost:3000/deleteBlog --data "id=54cc52fd531472970c08d727"
+1viki@cieplak:~$ 
+
+Updating a specific blog post in the database:
+viki@cieplak:~$ curl -X POST http://localhost:3000/updateBlog --data "id=54cc5322531472970c08d728&blogPost=Updating to this new text"
+1viki@cieplak:~$ 
+
+Inserting a commment with the blog id which it will be under:
+viki@cieplak:~$ curl -X POST http://localhost:3000/postComment --data "id=54cc52a6531472970c08d726&comment=Great name!"
+{"id":"54cc52a6531472970c08d726","comment":"Great name!","_id":"54cc562aa579fdd30cb5534e"}viki@cieplak:~$ 
+Reading all comments associated with a blog using its id as the lookup:
+viki@cieplak:~$ curl -X PUT http://localhost:3000/readComments --data "id=54cc52a6531472970c08d726"
+[{"_id":"54cc562aa579fdd30cb5534e","id":"54cc52a6531472970c08d726","comment":"Great name!"},{"_id":"54cc564da579fdd30cb5534f","id":"54cc52a6531472970c08d726","comment":"Yes!"}]viki@cieplak:~$ 
+
+Removing comment from the database:
+viki@cieplak:~$ curl -X PUT http://localhost:3000/deleteComment --data "id=54cc564da579fdd30cb5534f"
+1viki@cieplak:~$ 
+
+Updating comment inside the database:
+viki@cieplak:~$ curl -X POST http://localhost:3000/updateComment --data "id=54cc562aa579fdd30cb5534e&comment=Updating to new comment"
+1viki@cieplak:~$ 

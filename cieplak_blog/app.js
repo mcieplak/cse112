@@ -33,7 +33,7 @@ app.use(connect.bodyParser());
 *        title.
 * Output: Will return the object just inserted into the database.
 ******************************************************************************/
-app.post('/postBlogPost', function(req, res) {
+app.post('/postBlog', function(req, res) {
   // create the query for the database
   var query = {title: req.body.title, user : req.body.user,
                post: req.body.blogPost};
@@ -46,7 +46,8 @@ app.post('/postBlogPost', function(req, res) {
     }
     else {
       console.log("Inserted the following into the database:\n");
-     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      console.log("title: " + req.body.title + "\nuser: " + req.body.user);
+      console.log("post: " + req.body.blogPost);
       res.json(query);
     }
   });
@@ -81,8 +82,6 @@ app.put('/getBlog', function(req, res) {
       console.log("Could not find the information into the database.");
     }
     else {
-     // console.log("Inserted the following into the database:\n");
-      //console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
       console.log(records);
       res.json(records);
     }
@@ -133,9 +132,9 @@ app.post('/updateBlog', function(req, res) {
       console.log("Could not enter information into the database.");
     }
     else {
-      console.log("Inserted the following into the database:\n");
-     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
-      res.json(query);
+      console.log("Updated the blog post to:\n");
+      console.log(req.body.blogPost);
+      res.json(records);
     }
   });
 });
@@ -158,7 +157,7 @@ app.post('/postComment', function(req, res) {
     }
     else {
       console.log("Inserted the following into the database:\n");
-     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      console.log("id: " + req.body.id + "\ncomment: " + req.body.comment);
       res.json(query);
     }
   });
@@ -206,8 +205,6 @@ app.put('/deleteComment', function(req, res) {
       console.log("Could not find the information into the database.");
     }
     else {
-     // console.log("Inserted the following into the database:\n");
-      //console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
       console.log(records);
       res.json(records);
     }
@@ -236,9 +233,9 @@ app.post('/updateComment', function(req, res) {
       console.log("Could not enter information into the database.");
     }
     else {
-      console.log("Inserted the following into the database:\n");
-     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
-      res.json(query);
+      console.log("Updating the comment o:\n");
+      console.log("comment: " + req.body.comment);
+      res.json(records);
     }
   });
 });
