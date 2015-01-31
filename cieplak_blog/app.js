@@ -116,13 +116,39 @@ app.put('/deleteBlog', function(req, res) {
 });
 
 /******************************************************************************
+* /updateBlog: Will update a blog post in the database.
+* Input: The blog post ID along with the new nlog post.
+* Output: Will return the object just inserted into the database.
+******************************************************************************/
+app.post('/updateBlog', function(req, res) {
+  var BSON = mongo.BSONPure;
+  var o_id = new BSON.ObjectID(req.body.id);
+  var query = {_id : o_id};
+
+
+  // execute the query
+  collection.update(query, {$set:{post:req.body.blogPost}}, function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not enter information into the database.");
+    }
+    else {
+      console.log("Inserted the following into the database:\n");
+     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      res.json(query);
+    }
+  });
+});
+
+
+/******************************************************************************
 * /postComment: Will insert a new comment under a blog post into the database.
 * Input: The blog post ID along with the comment.
 * Output: Will return the object just inserted into the database.
 ******************************************************************************/
 app.post('/postComment', function(req, res) {
   // create the query for the database
-  var query = {id: req.body.id, user : req.body.comment};
+  var query = {id: req.body.id, comment : req.body.comment};
   
   // execute the query
   collection.insert(query, {w:1}, function(err, records) {
@@ -187,6 +213,34 @@ app.put('/deleteComment', function(req, res) {
     }
   });
 
+});
+
+/******************************************************************************
+* /updateComment: Will update a comment in the database.
+* Input: The blog post ID along with the new comment.
+* Output: Will return the object just inserted into the database.
+******************************************************************************/
+app.post('/updateComment', function(req, res) {
+  // create the query for the database
+  //var query = {id: req.body.id, user : req.body.comment};
+  
+  var BSON = mongo.BSONPure;
+  var o_id = new BSON.ObjectID(req.body.id);
+  var query = {_id : o_id};
+
+
+  // execute the query
+  collection.update(query, {$set:{comment:req.body.comment}}, function(err, records) {
+    // check if any errors occurred
+    if(err) {
+      console.log("Could not enter information into the database.");
+    }
+    else {
+      console.log("Inserted the following into the database:\n");
+     // console.log("title: " + req.body.title + "\nblogPost: " + req.body.blogPost);
+      res.json(query);
+    }
+  });
 });
 
 
