@@ -1,5 +1,5 @@
 /******************************************************************************
-* Name: Michael Cieplak
+* Name: Michal Cieplak
 * PID: A11445234
 * Class: CSE112
 * Description: This is a rest API which maintains a websites blog. This API is
