@@ -41,7 +41,7 @@ viki@cieplak:~$ curl -X PUT http://localhost:3000/getBlog --data "id=54cc52fd531
 Deleting a specific blog from the database:
 
 Command:
-curl -X PUT http://localhost:3000/deleteBlog --data "id="
+curl -X DELETE http://localhost:3000/deleteBlog --data "id="
 
 Example:
 viki@cieplak:~$ curl -X DELETE http://localhost:3000/deleteBlog --data "id=54cc52fd531472970c08d727"
@@ -83,7 +83,7 @@ Command:
 curl -X DELETE http://localhost:3000/deleteComment --data "id="
 
 Example:
-viki@cieplak:~$ curl -X PUT http://localhost:3000/deleteComment --data "id=54cc564da579fdd30cb5534f"
+viki@cieplak:~$ curl -X DELETE http://localhost:3000/deleteComment --data "id=54cc564da579fdd30cb5534f"
 1viki@cieplak:~$ 
 
 
